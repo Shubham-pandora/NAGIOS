@@ -41,11 +41,11 @@ define service{
         check_command                   check_nrpe! -n -c check_uptime
         }
 
-{% if (inventory_hostname in groups['STREAMS_VLAN48']) %}
+{% if (inventory_hostname in groups['ADMIN_UI_VLAN48']) %}
 define service{
         use                             local-service         ; Name of service template to use
         host_name                       {{ inventory_hostname }}
-        service_description             Streams
-        check_command                   check_nrpe! -n -c check_streams
+        service_description             StreamsAPIGateway
+        check_command                   check_nrpe! -n -c check_StreamsAPIGateway
         }
 {% endif %}

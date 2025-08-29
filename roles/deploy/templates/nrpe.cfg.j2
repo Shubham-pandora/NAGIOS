@@ -18,6 +18,6 @@ command[check_ntpd_time_sync]=/usr/lib64/nagios/plugins/check_ntp_time -H ipa-dc
 command[check_uptime]=/usr/lib64/nagios/plugins/check_uptime -w 115200 -c 129600
 
 
-{% if (inventory_hostname in groups['STREAMS_VLAN48']) %}
-command[check_streams]=/usr/lib64/nagios/plugins/check_process -s streams -c 1
+{% if (inventory_hostname in groups['ADMIN_UI_VLAN48']) %}
+command[check_StreamsAPIGateway]=/usr/lib64/nagios/plugins/check_procs -C node -a /opt/admin/AdminNewUI/server.js -c 1:10
 {% endif %}
