@@ -5,26 +5,6 @@ define host{
         address                 {{ inventory_hostname }}
         }
 
-define service{
-        use                             generic-service         ; Name of service template to use
-        host_name                       {{ inventory_hostname }}
-        service_description             PING
-	check_command			check_ping!100.0,20%!500.0,60%
-        }
-
-define service{
-	use                             generic-service         ; Name of service template to use
-	host_name                       {{ inventory_hostname }}
-        service_description             Check_RAM
-        check_command                   check_nrpe! -n -c check_ram
-        }
-
-define service{
-        use                             generic-service         ; Name of service template to use
-        host_name                       {{ inventory_hostname }}
-        service_description             Swap Usage
-	check_command			check_nrpe! -n -c check_swap
-        }
 
 define service{
         use                             generic-service         ; Name of service template to use
@@ -38,20 +18,6 @@ define service{
         host_name                       {{ inventory_hostname }}
         service_description             Current Users
 	check_command			check_nrpe! -n -c check_users
-        }
-
-define service{
-        use                             generic-service         ; Name of service template to use
-        host_name                       {{ inventory_hostname }}
-        service_description             Total Processes
-	check_command			check_nrpe! -n -c check_total_procs
-        }
-
-define service{
-        use                             generic-service         ; Name of service template to use
-        host_name                       {{ inventory_hostname }}
-        service_description             Zombie Processes
-        check_command                   check_nrpe! -n -c check_zombie_procs
         }
 
 define service{
@@ -71,38 +37,9 @@ define service{
 define service{
         use                             generic-service         ; Name of service template to use
         host_name                       {{ inventory_hostname }}
-        service_description             Bandwidth
-        check_command                   check_nrpe! -n -c check_bandwidth
-        }
-
-define service{
-        use                             generic-service         ; Name of service template to use
-        host_name                       {{ inventory_hostname }}
-        service_description             Config Change Script in Crontab
-        check_command                   check_nrpe! -n -c check_crontab_config
-        }
-
-define service{
-        use                             generic-service         ; Name of service template to use
-        host_name                       {{ inventory_hostname }}
-        service_description             Cron wsadmin
-        check_command                   check_nrpe! -n -c check_Cron_wsadmin
-        }
-
-define service{
-        use                             generic-service         ; Name of service template to use
-        host_name                       {{ inventory_hostname }}
-        service_description             Cron root
-        check_command                   check_nrpe! -n -c check_Cron_root
-        }
-
-define service{
-        use                             generic-service         ; Name of service template to use
-        host_name                       {{ inventory_hostname }}
         service_description             System Uptime
         check_command                   check_nrpe! -n -c check_uptime
         }
-
 
 {% if (inventory_hostname in groups['STREAMS_VLAN48']) %}
 define service{
