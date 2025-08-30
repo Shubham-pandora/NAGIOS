@@ -4,37 +4,29 @@
     state: present
     update_cache: yes
 
-# Run check_nrpe on 52 but delegate from 96
-- name: Run check_nrpe on nagios-server
+# Run check_nrpe on Nagios server but against this host
+- name: Run check_nrpe from Nagios server
   shell: /usr/lib64/nagios/plugins/check_nrpe -H {{ inventory_hostname }}
   register: nrpe_status
   delegate_to: 10.30.48.52
   failed_when: false
   changed_when: false
 
-- name: Set NRPE status fact for use in this host 
-  set_fact:
-    nrpe_stdout: "{{ nrpe_status.stdout }}"
-  when: nrpe_status.stdout is defined
-
-- name: Configure NRPE template for valid response
+- name: Configure NRPE based on connectivity
   template:
-    src: nrpe.cfg.j2
-    dest: "/etc/nagios/nrpe.cfg"
+    src: "{{ nrpe_template }}"
+    dest: "/etc/nagios/nrpe1.cfg"
     owner: root
     group: root
     mode: '0640'
     backup: yes
-  when: nrpe_stdout is search("NRPE v")
+  vars:
+    nrpe_template: >-
+      {{ 'nrpe.cfg.j2' if nrpe_status.stdout | default('') is regex('NRPE v')
+         else 'nrpe_withoutn.j2' if nrpe_status.stdout | default('') is regex('CHECK_NRPE')
+         else omit }}
+  when: nrpe_template is defined
   diff: true
+  notify: Restart NRPE
 
-- name: Configure NRPE template for error case
-  template:
-    src: nrpe_withoutn.j2
-    dest: "/etc/nagios/nrpe_withoutn.cfg"
-    owner: root
-    group: root
-    mode: '0640'
-    backup: yes
-  when: nrpe_stdout is search("CHECK_NRPE")
-  diff: true
+
