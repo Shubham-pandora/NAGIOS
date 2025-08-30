@@ -3,3 +3,7 @@
     name: nrpe
     state: restarted
 
+- name: Reload Nagios
+  service:
+    name: nagios
+    state: reloaded

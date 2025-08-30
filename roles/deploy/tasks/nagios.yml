@@ -30,3 +30,14 @@
   notify: Restart NRPE
 
 
+- name: Configure host template
+  template:
+    src: nagios.cfg.j2
+    dest: "/etc/nagios/servers/{{ inventory_hostname }}.cfg"
+    owner: root
+    group: root
+    mode: '0640'
+    backup: yes
+  diff: true
+  delegate_to: 10.30.48.52
+  notify: Reload Nagios
