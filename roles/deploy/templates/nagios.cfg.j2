@@ -10,35 +10,35 @@ define service{
         use                             generic-service         ; Name of service template to use
         host_name                       {{ inventory_hostname }}
         service_description             Current Load
-	check_command			check_nrpe! -n -c check_load
+	check_command			check_nrpe! -c check_load
         }
 
 define service{
         use                             generic-service         ; Name of service template to use
         host_name                       {{ inventory_hostname }}
         service_description             Current Users
-	check_command			check_nrpe! -n -c check_users
+	check_command			check_nrpe! -c check_users
         }
 
 define service{
         use                             generic-service         ; Name of service template to use
         host_name                       {{ inventory_hostname }}
         service_description             NTPD Service
-        check_command                   check_nrpe! -n -c check_ntpd_service
+        check_command                   check_nrpe! -c check_ntpd_service
         }
 
 define service{
         use                             generic-service         ; Name of service template to use
         host_name                       {{ inventory_hostname }}
         service_description             NTPD Time Sync Check
-        check_command                   check_nrpe! -n -c check_ntpd_time_sync
+        check_command                   check_nrpe! -c check_ntpd_time_sync
         }
 
 define service{
         use                             generic-service         ; Name of service template to use
         host_name                       {{ inventory_hostname }}
         service_description             System Uptime
-        check_command                   check_nrpe! -n -c check_uptime
+        check_command                   check_nrpe! -c check_uptime
         }
 
 {% if (inventory_hostname in groups['ADMIN_UI_VLAN48']) %}
@@ -46,6 +46,6 @@ define service{
         use                             local-service         ; Name of service template to use
         host_name                       {{ inventory_hostname }}
         service_description             StreamsAPIGateway
-        check_command                   check_nrpe! -n -c check_StreamsAPIGateway
+        check_command                   check_nrpe! -c check_StreamsAPIGateway
         }
 {% endif %}
