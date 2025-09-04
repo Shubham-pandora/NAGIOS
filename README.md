@@ -1,4 +1,4 @@
-ansible-playbook deploy.yml -i INV  --limit "192.168.0.104" -k -v
+ansible-playbook deploy.yml -i INV  --limit "10.30.48.96" -k -v
 
 
 

@@ -15,7 +15,7 @@
 - name: Configure NRPE based on connectivity
   template:
     src: "{{ nrpe_template }}"
-    dest: "/etc/nagios/nrpe1.cfg"
+    dest: "/etc/nagios/nrpe.cfg"
     owner: root
     group: root
     mode: '0640'

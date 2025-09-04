@@ -6,4 +6,4 @@
 - name: Reload Nagios
   service:
     name: nagios
-    state: reloaded
+    state: restarted
